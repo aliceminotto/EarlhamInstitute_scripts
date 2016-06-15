@@ -29,7 +29,13 @@ parser.add_argument('vcf',type=str,help="vcf file")
 parser.add_argument('-s1','--sample1',type=str,help="sample 1",required=True)
 parser.add_argument('-s2','--sample2',type=str,help="sample 2",required=True)
 parser.add_argument('--mindp',type=int,default=0,help="DP minimum treshold")
+parser.add_argument('-f','--filter',type=str,nargs='+',help="filter for different GT")
 args = parser.parse_args()
+filt=args.filter
+if filt:
+    if len(filt)<2:
+        print "--filter requires at least two samples"
+        quit()
 a=args.vcf
 samone=args.sample1
 samtwo=args.sample2
@@ -38,6 +44,9 @@ mindp=args.mindp
 vcf_reader=vcf.Reader(open(a,'r'))
 print "#CHROM"+'\t'+"POS"+'\t'+"ID"+'\t'+"REF"+'\t'+"ALT"+'\t'+"SI_"+samone+'\t'+"SI_"+samtwo+'\t'+"BFR"+'\t'+"DP_"+samone+'\t'+"DP_"+samtwo
 for record in vcf_reader:
+    if filt:
+        if not any(record.genotype(x)["GT"]!=record.genotype(filt[0])["GT"] for x in filt[1:]):
+            continue
     dpa=record.genotype(samone)["DP"]
     dpb=record.genotype(samtwo)["DP"]
     if dpa>mindp and dpb>mindp:
