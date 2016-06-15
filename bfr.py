@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import vcf
-import sys
 import argparse
 
 
