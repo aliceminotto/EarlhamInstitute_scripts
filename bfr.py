@@ -16,12 +16,14 @@ def get_bfr(index1,index2):
         return index1/index2
 
 def print_row():
+    global total
     bfr=get_bfr(snpinxA,snpinxB)
     if record.ID==None:
         fid='.'
     else:
         fid=str(record.ID)
     print str(record.CHROM)+'\t'+str(record.POS)+'\t'+fid+'\t'+str(record.REF)+'\t'+ALT+'\t'+str(snpinxA)+'\t'+str(snpinxB)+'\t'+str(bfr)+'\t'+str(dpa)+'\t'+str(dpb)
+    total+=1
 
 
 parser = argparse.ArgumentParser(description="Calculate BFR")
@@ -41,14 +43,24 @@ samone=args.sample1
 samtwo=args.sample2
 mindp=args.mindp
 
+total=0
+nocov=0
+averone=0.0
+avertwo=0.0
+records=0
+nofilt=0
 vcf_reader=vcf.Reader(open(a,'r'))
 print "#CHROM"+'\t'+"POS"+'\t'+"ID"+'\t'+"REF"+'\t'+"ALT"+'\t'+"SI_"+samone+'\t'+"SI_"+samtwo+'\t'+"BFR"+'\t'+"DP_"+samone+'\t'+"DP_"+samtwo
 for record in vcf_reader:
-    if filt:
-        if not any(record.genotype(x)["GT"]!=record.genotype(filt[0])["GT"] for x in filt[1:]):
-            continue
+    records+=1
     dpa=record.genotype(samone)["DP"]
     dpb=record.genotype(samtwo)["DP"]
+    averone+=dpa
+    avertwo+=dpb
+    if filt:
+        if all(record.genotype(x)["GT"]==record.genotype(filt[0])["GT"] for x in filt[1:]):
+            nofilt+=1
+            continue
     if dpa>mindp and dpb>mindp:
         if len(record.ALT)>1:
             for index,variant in enumerate(record.ALT):
@@ -61,3 +73,14 @@ for record in vcf_reader:
             snpinxB=snp_index(samtwo)
             ALT=str(record.ALT).strip('[]')
             print_row()
+    else:
+        nocov+=1
+##### creating stats file
+stats_file=open(a[:-4]+"_stats.txt",'w')
+print >>stats_file, "Samples used:", samone, samtwo
+print >>stats_file, "SNPs and variants called:", total
+print >>stats_file, "SNPs and variants discarded for low coverage:", nocov
+print >>stats_file, "SNPs and variants discarded for GT filter:", nofilt
+print >>stats_file, "Average coverage sample", samone+":", averone/records
+print >>stats_file, "Average coverage sample", samtwo+":", avertwo/records
+stats_file.close()
