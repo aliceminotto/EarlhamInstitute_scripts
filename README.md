@@ -21,11 +21,12 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -s1 SAMPLE1, --sample1 SAMPLE1
-                        sample 1
-  -s2 SAMPLE2, --sample2 SAMPLE2
-                        sample 2
   --mindp MINDP         DP minimum treshold
+  -t TRAIT [TRAIT ...], --trait TRAIT [TRAIT ...]
+                        trait samples
+  -b BASE [BASE ...], --base BASE [BASE ...]
+                        base samples
+  --field FIELD         SNP index numerator/ default=AO
   -f FILTER [FILTER ...], --filter FILTER [FILTER ...]
                         filter for different GT
 ```
