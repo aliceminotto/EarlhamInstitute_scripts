@@ -1,4 +1,4 @@
-## TGAC scripts
+## Earlham Institute scripts
 
 ###### agp2fa.py
 
