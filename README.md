@@ -30,3 +30,7 @@ optional arguments:
   -f FILTER [FILTER ...], --filter FILTER [FILTER ...]
                         filter for different GT
 ```
+
+###### rmi_docker.sh
+
+Simple bash script to remove all dangling images with linked containers.
