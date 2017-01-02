@@ -31,6 +31,15 @@ optional arguments:
                         filter for different GT
 ```
 
+##### rm_jobs.sh
+
+Simple bash script to remove all Agave API jobs with a certain status (e.g. FAILED or FINISHED). Required to have the CyVerse CLI installed to work.
+
+Usage:
+```
+rm_jobs.sh <STATUS>
+```
+
 ###### rmi_docker.sh
 
 Simple bash script to remove all dangling images with linked containers.
