@@ -31,7 +31,7 @@ optional arguments:
                         filter for different GT
 ```
 
-##### rm_jobs.sh
+###### rm_jobs.sh
 
 Simple bash script to remove all Agave API jobs with a certain status (e.g. FAILED or FINISHED). Required to have the CyVerse CLI installed to work.
 
