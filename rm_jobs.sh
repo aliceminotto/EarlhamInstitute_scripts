@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 STATUS=$1
 
