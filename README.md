@@ -1,5 +1,7 @@
 ## Earlham Institute scripts
 
+_also known as "requests from people and/or super easy scrits that will make my life easier"_
+
 ###### agp2fa.py
 
 Concatenate in a fasta file.
