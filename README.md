@@ -1,6 +1,6 @@
 ## Earlham Institute scripts
 
-_also known as "requests from people and/or super easy scrits that will make my life easier"_
+_also known as "requests from people and/or super easy scripts that will make my life easier"_
 
 ###### agp2fa.py
 
